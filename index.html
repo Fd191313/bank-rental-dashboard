@@ -136,7 +136,7 @@
 
 <script>
 const CREDS = [{'u':'bankrental','p':'Eg@12345'},{'u':'bank rental','p':'Eg@12345'}];
-let db;
+window.db = null;
 
 function doLogin() {
   const u = document.getElementById('login-user').value.trim().toLowerCase();
@@ -164,7 +164,7 @@ function initFirebase() {
     appId: "1:409130827501:web:73e0f4218dfbaa9dbed6e4"
   };
   firebase.initializeApp(cfg);
-  db = firebase.firestore();
+  window.db = firebase.firestore();
   window._fbReady = true;
   if (window._appMountCb) window._appMountCb();
 }
