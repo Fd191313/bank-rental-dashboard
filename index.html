@@ -155,18 +155,23 @@ document.addEventListener('keydown', e => {
 });
 
 function initFirebase() {
-  const cfg = {
-    apiKey: "AIzaSyDMYR9_sp4CKe1ZH9x3q3lzFiNqoQsqdkI",
-    authDomain: "bank-rental-dashboard.firebaseapp.com",
-    projectId: "bank-rental-dashboard",
-    storageBucket: "bank-rental-dashboard.firebasestorage.app",
-    messagingSenderId: "409130827501",
-    appId: "1:409130827501:web:73e0f4218dfbaa9dbed6e4"
-  };
-  firebase.initializeApp(cfg);
-  window.db = firebase.firestore();
-  window._fbReady = true;
-  if (window._appMountCb) window._appMountCb();
+  try {
+    const cfg = {
+      apiKey: "AIzaSyDMYR9_sp4CKe1ZH9x3q3lzFiNqoQsqdkI",
+      authDomain: "bank-rental-dashboard.firebaseapp.com",
+      projectId: "bank-rental-dashboard",
+      storageBucket: "bank-rental-dashboard.firebasestorage.app",
+      messagingSenderId: "409130827501",
+      appId: "1:409130827501:web:73e0f4218dfbaa9dbed6e4"
+    };
+    const app = firebase.apps.length ? firebase.app() : firebase.initializeApp(cfg);
+    window.db = firebase.firestore(app);
+    window._fbReady = true;
+    if (window._appMountCb) window._appMountCb();
+  } catch(e) {
+    console.error('Firebase init error:', e);
+    alert('Firebase connection failed: ' + e.message + '\nPlease reload the page and try again.');
+  }
 }
 </script>
 
