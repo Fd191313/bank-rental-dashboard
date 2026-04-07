@@ -8,8 +8,8 @@
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 <style>
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -164,8 +164,11 @@ function initFirebase() {
       messagingSenderId: "409130827501",
       appId: "1:409130827501:web:73e0f4218dfbaa9dbed6e4"
     };
-    const app = firebase.apps.length ? firebase.app() : firebase.initializeApp(cfg);
-    window.db = firebase.firestore(app);
+    if (!firebase.apps.length) {
+      firebase.initializeApp(cfg);
+    }
+    window.db = firebase.firestore();
+    console.log('Firebase v8 initialized, db:', window.db);
     window._fbReady = true;
     if (window._appMountCb) window._appMountCb();
   } catch(e) {
